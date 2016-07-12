@@ -118,10 +118,10 @@ struct Tweet {
 }
 ```
 
-[1]枚举类型是c语言风格。将在没指定的情况下默认0开始。
-[2]你当然也可以给他提供一个特定的整型值。
-[3]16进制也是被允许的。
-[4]注意结尾没有`;`号
+[1]枚举类型是c语言风格。将在没指定的情况下默认0开始。  
+[2]你当然也可以给他提供一个特定的整型值。  
+[3]16进制也是被允许的。  
+[4]注意结尾没有`;`号  
 [5]在指定默认值时使用常量的完全限定名称。
 
 值得注意的是：不想协议栈，Thrift还**不支持**嵌套的枚举类型（或在里面嵌套结构体）
@@ -152,8 +152,37 @@ namespace cpp com.example.project  // [1]
 namespace java com.example.project // [2]
 ```
 
-[1]翻译为命名空间 ` com { namespace example { namespace project { `
+[1]翻译为命名空间 ` com { namespace example { namespace project { `  
 [2]翻译为包 `com.example.project`
 
-###包含（Include）
+### 引用（Include）
+
+它对于将Thrift的定义分割成分离的文件是很有用的，这增加的代码的可以维护性，使得代码可重用并改善了模块化和组织性。Thrift允许文件引用（*include*）其他的
+Thrift文件。引用文件被查找在当前目录中，并通过搜索指定的相对路径。（原文：Included files are looked up in the current directory and by searching relative to any paths specified with the -I compiler flag.）
+
+引用的对象通过Thrift文件名的前缀来进行。
+
+```
+include "tweet.thrift"           // [1]
+...
+struct TweetSearchResult {
+    1: list<tweet.Tweet> tweets; // [2]
+}
+```
+
+[1]引用中的文件名是必须的;再次提醒不用确实冒号另一边的内容;  
+[2]注意`tweet`的前缀;
+
+### 常量
+
+Thrift允许用户定义跨语言的常量。组合类型和结构体使用josn语句定义。
+
+```
+const i32 INT_CONST = 1234;    // [1]
+const map<string,string> MAP_CONST = {"hello": "world", "goodnight": "moon"}
+```
+
+[1]`;`号是可以省略的（令人困惑）;16进制有效。
+
+### 定义结构体
 
