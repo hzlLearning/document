@@ -9,7 +9,11 @@
 
 ---
 
+<<<<<<< HEAD
 该部分内容包含不同环境下用thrift生成不同语言代码的文档。我们首先介绍全线使用的共同概念，这些概念关系到代码生成的结构，希望它能帮助你如何高效的去使用thrift。
+=======
+    该部分内容包含不同环境下用thrift生成不同语言代码的文档。我们首先介绍全线使用的共同概念，这些概念关系到代码生成的结构，希望它能帮助你如何高效的去使用thrift。
+>>>>>>> 8d3c7c89ba9037baf8ccf8f524f94635b611e2a3
 ##**2.1. 概念**
 下面是thrift网络堆栈示意图:
 
@@ -24,6 +28,7 @@
 > * write
 > * flush
 
+<<<<<<< HEAD
 除了上面的`传输`接口，thrift也适用于`ServerTransport`接口来接收或者创建原始传输对象。正如其名称暗示的，`ServerTransport`主要用于服务器端创建新的传输对象给下面的接口。
 
 > * open
@@ -155,8 +160,14 @@ service Twitter {
 }
 ```
 **嵌套的结构是如何初始化的**
+=======
+>>>>>>> 8d3c7c89ba9037baf8ccf8f524f94635b611e2a3
 
   [1]: https://www.zybuluo.com/klci/note/430232
   [2]: https://github.com/ab233
   [3]: https://www.zybuluo.com/klci/note/431393
+<<<<<<< HEAD
   [4]: https://issues.apache.org/jira/browse/THRIFT-110
+=======
+  [4]: http://oa5lp7rpl.bkt.clouddn.com/figure1.png
+>>>>>>> 8d3c7c89ba9037baf8ccf8f524f94635b611e2a3
