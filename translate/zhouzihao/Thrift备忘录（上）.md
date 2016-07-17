@@ -225,8 +225,36 @@ struct Tweet {
 
 ### 定义服务
 
+相对的，有许多流行的反序列化的框架（如Protocol Buffers），几乎没有跨语言的提供支持基于RPC服务的开箱的框架。这是Thrift框架的主要吸引力之一。  
+想想如何定义一个服务像java语言的接口，你需要提供一个命名和里面的方法。可以选择的，一个服务可以继承其他的服务。  
+Thrift编译器生成服务接口代码（用于服务器）和根存（用于客户端），而且是使用你选择的语言。Thrift支持许多语言的RPC库，以至于你可以使用这些客户端和服务器。
 
-  
+```thrift
+service Twitter {
+    // A method definition looks like C code. It has a return type, arguments,
+    // and optionally a list of exceptions that it may throw. Note that argument
+    // lists and exception list are specified using the exact same syntax as
+    // field lists in structs.
+    void ping(),                                                             // [1]
+    bool postTweet(1:Tweet tweet) throws (1:TwitterUnavailable unavailable), // [2]
+    TweetSearchResult searchTweets(1:string query);                          // [3]
+
+    // The 'oneway' modifier indicates that the client only makes a request and
+    // does not wait for any response at all. Oneway methods MUST be void.
+    oneway void zip()                                                        // [4]
+}
+```
+
+[1]令人困惑的是：函数定义可以以`,`号和`;`号结束  
+[2]形参可以是原始数据类型或者结构体  
+[3]结构体同样可以作为返回类型  
+[4]`void`是个 有效的函数返回值类型  
+
+注意，函数的参数列表（和异常列表）和结构体惊人的相似。  
+服务支持继承：一个服务可以使用扩展关键字从另一个服务继承。
+
+> **嵌套类型**  
+正如文章所写，Thrift不支持类型的嵌套定义。你不可以在结构体中定义结构体或枚举类型。你可以使用use关键字来引入类型。
 
 
 
