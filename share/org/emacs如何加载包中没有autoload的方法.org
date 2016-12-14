@@ -1,0 +1,29 @@
+* 在emacs开发里怎么加载包中没有使用autoload的方法
+** 我是怎么遇到这个问题的：
+   我想给我的spacemacs写一个插件,在package.el中引用了一个包。具体来说是use了一个包。但是呢~我在funcs.el里面需要使用这个包里的方法但是包名加方法显示找不到方法。
+我发现有些方法可以啊。但是那些是加了：autoload魔法注释的方法。于是乎就有了上面的题目。
+** 解决来源：
+   我是去bbs上问的。那里高手云集。
+** 解决方法（搬运的）
+   使用 autoload 或及时地 require 应该都可行：
+   #+begin_src elisp
+   ;;autoload
+(autoload 'youdao-dictionary--region-or-word "youdao-dictionary")
+(autoload 'youdao-dictionary--format-result "youdao-dictionary")
+
+(defun her-youdao-dict ()
+  (interactive)
+  (let ((word (youdao-dictionary--region-or-word)))
+    (when word
+      (youdao-dictionary--format-result word))))
+;;require
+(defun his-youdao-dict ()
+  (interactive)
+  (require 'youdao-dictionary)
+  (let ((word (youdao-dictionary--region-or-word)))
+    (when word
+      (youdao-dictionary--format-result word))))
+   #+end_src
+
+1. (require 'youdao-dictionary) 放在函数体内，只有当函数被真正调用时才执行，eval 这个 (defun his-youdao-dict () ...) 本身不会调用；
+2. require 调用多次没有关系，如果 youdao-dictionary 已经被加载过了，它不会进行任何操作。
